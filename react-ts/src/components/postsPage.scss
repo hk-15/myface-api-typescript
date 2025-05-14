@@ -1,0 +1,30 @@
+@use 'constants';
+
+// .page-container{
+//     display: grid;
+//     grid-auto-columns: 1fr;
+//     grid-template-rows: 175px 45px 45px 45px;
+//     gap: 0px 0px;
+//     width: 250px;
+//     height: 320px; /* Set a fixed height for the card */
+//     margin: 0 10px;
+// }
+
+.post-feed {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.post-container {
+    max-width: 95vw;
+    padding: 16px;
+    img {
+        width: 100%;
+        height: auto;
+    }
+    p {
+        margin: 0 0 1em;
+    }
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import './postsPage.scss';
 
 export type Post = {
     id: number;
@@ -14,20 +15,22 @@ export function PostsPage() {
         fetch("http://localhost:3001/posts")
             .then(response => response.json())
             .then(data => {
-                console.log(data)
              setPosts(data.results);
-    })}, [posts]);
+    })}, []);
+
     return (
-        <div>
-            <h2>All Posts</h2>
-            {posts.length === 0 ? ( <h3>No posts available</h3>) : 
-                posts.map((post) => (
-                <div key={post.id}>
-                    <img src={post.imageUrl} />
-                    <h3>{post.postedBy.username}</h3>
-                    <p>{post.message}</p>
-                </div>
-            ))}
+        <div className = "page-container">
+            <h1>All Posts</h1>
+            <div className = "post-feed">
+                {posts.length === 0 ? ( <h3>No posts available</h3>) : 
+                    posts.map((post) => (
+                    <div className = "post-container" key={post.id}>
+                        <img src={post.imageUrl} />
+                        <p className="user-name">{post.postedBy.username}</p>
+                        <p>{post.message}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     )
     
