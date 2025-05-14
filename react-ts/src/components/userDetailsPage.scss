@@ -1,0 +1,27 @@
+@use 'constants';
+
+.user-page-container{
+    display: grid;
+    grid-auto-columns: 1fr;
+    margin: 0 10px;
+    h1 {
+        text-align: center;
+    }
+    
+}
+.user-cover-banner{
+    img {
+        width: 100;
+        height: auto;
+        overflow: hidden;
+    }
+}
+
+.user-bio{
+    
+}
+.profile-picture {
+        border-radius: 50;
+        border-color: white;
+        border: 2px;
+    }

@@ -37,11 +37,15 @@ export function UserDetailsPage() {
     },[userId])
         if (!user) return <div>No User</div>;
     return (
-    <div>
-        <img src={user.coverImageUrl}/>
-        <img src={user.profileImageUrl}/>
-        <h1>{user.name}</h1>
-        <h2>{user.username}</h2>
+    <div className = "user-page-container">
+        <div className="user-cover-banner">
+            <img src={user.coverImageUrl}/>
+        </div>
+        <div className="user-bio">
+            <img className="profile-picture" src={user.profileImageUrl}/>
+            <h1>{user.name}</h1>
+            <h2>{user.username}</h2>
+        </div>
         <h3>{user.name}'s Posts</h3>
         <ul>
             {user.posts.map(post => (
