@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
+import './userDetailsPage.scss';
 
 export type User = {
     id: number;
@@ -37,26 +38,32 @@ export function UserDetailsPage() {
     },[userId])
         if (!user) return <div>No User</div>;
     return (
-    <div className = "user-page-container">
-        <div className="user-cover-banner">
-            <img src={user.coverImageUrl}/>
-        </div>
-        <div className="user-bio">
-            <img className="profile-picture" src={user.profileImageUrl}/>
-            <h1>{user.name}</h1>
-            <h2>{user.username}</h2>
-        </div>
+    <div>
+        <div className="user-banner">
+            <img className="banner-image" src={user.coverImageUrl}/>
+        </div> 
+        <div className = "user-page-container">
+            <div className="user-bio">
+                <img className="profile-picture" src={user.profileImageUrl}/>
+                <div className="bio-information">
+                    <h1>{user.name}</h1>
+                    <p className="bio-username">{user.username}</p>
+                    <p>{user.email}</p>
+                </div>
+            </div>
+        
         <h3>{user.name}'s Posts</h3>
-        <ul>
+        <ul className="user-posts-container">
             {user.posts.map(post => (
                 <li key={post.id}>
-                    <img src={post.imageUrl} />
+                    <img src={post.imageUrl}/>
+                    <p className="bio-username">{user.username}</p>
                     <p>{post.message}</p>
                 </li>
             ))}
         </ul>
         <h3>{user.name}'s Likes</h3>
-        <ul>
+        <ul className="user-posts-container">
             {user.likes.map(post => (
                 <li key={post.id}>
                     <img src={post.imageUrl} />
@@ -64,8 +71,8 @@ export function UserDetailsPage() {
                 </li>
             ))}
         </ul>
-        <h3>{user.name}'s Disikes</h3>
-        <ul>
+        <h3>{user.name}'s Dislikes</h3>
+        <ul className="user-posts-container">
             {user.dislikes.map(post => (
                 <li key={post.id}>
                     <img src={post.imageUrl} />
@@ -73,6 +80,8 @@ export function UserDetailsPage() {
                 </li>
             ))}
         </ul>
+
+    </div>  
     </div>
     );
 }

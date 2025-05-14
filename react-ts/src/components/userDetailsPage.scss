@@ -1,27 +1,73 @@
 @use 'constants';
 
-.user-page-container{
-    display: grid;
-    grid-auto-columns: 1fr;
-    margin: 0 10px;
-    h1 {
-        text-align: center;
-    }
-    
-}
-.user-cover-banner{
-    img {
-        width: 100;
+.user-banner{
+    max-width: 100vw;
+    .banner-image {
+        width: 100%;
         height: auto;
         overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: -1;
     }
 }
 
-.user-bio{
-    
+.user-page-container {
+    position: relative;
+    top: 60px;
 }
-.profile-picture {
-        border-radius: 50;
+.user-bio{
+    display: flex;
+    margin: 0px;
+    background-color: constants.$transparentOverlay;
+    z-index: 1;
+    .profile-picture {
+        width: 30vw;
+        height: auto;
+        border-radius: 50%;
         border-color: white;
-        border: 2px;
+        border: 4px solid;
     }
+}
+
+.bio-information{
+    h1{
+        font-size: 24px;
+        margin: 16px 8px 14px;
+    }
+    p {
+        font-size: 14px;
+        margin: 0px 8px 0;
+    }
+    .bio-username {
+        font-weight: constants.$fontWeightBold;
+    }
+}
+
+h3{
+    margin-left: 16px
+}
+.user-posts-container{
+    display: flex;
+    overflow: auto;
+    gap: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    img {
+        width: 50vw;
+        height: auto;
+    }
+    li {
+        list-style: none;
+        background-color: constants.$darkerBackground;
+
+        p {
+            font-size: 12px;
+            margin-left: 12px;
+        }
+
+        .bio-username {
+        font-weight: constants.$fontWeightBold;
+        } 
+    }
+}

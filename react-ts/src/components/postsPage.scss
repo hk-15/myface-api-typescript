@@ -18,7 +18,7 @@
 
 .post-container {
     max-width: 95vw;
-    padding: 16px;
+    padding-bottom: 16px;
     background-color: constants.$darkerBackground;
     margin-bottom: 20px;
     img {
@@ -27,6 +27,7 @@
     }
     p {
         margin: 0 0 0.5em;
+        padding: 0 1em;
         
     }
     .user-name {
