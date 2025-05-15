@@ -17,21 +17,39 @@ const CreateUser = () => {
         coverImageUrl: '',
         profileImageUrl: ''
     });
-    const [errors, setErrors] = useState('')
+    const [errors, setErrors] = useState({
+        username: '',
+        email: ''
+    })
     const [message, setMessage] = useState('')
+    
     const isUsernameValid = (username: string): boolean => {
         const usernamePattern = /^[a-z0-9]/;
         return usernamePattern.test(username);
+    }
+     const isEmailValid = (email: string): boolean => {
+        const emailPattern = /[\w.'_%+-]*@[\w.-]*/g;
+        return emailPattern.test(email);
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
         if (name === "username") {
                 if (!isUsernameValid(value)) {
-                setErrors('Error: Username should only contain lowercase letters and numbers.')
+                setErrors({
+                    ...errors,
+                    username: 'Error: Username should only contain lowercase letters and numbers.'
+                })
                 return
             }
-            setErrors('')
+        } else if (name === "email") {
+                if (!isEmailValid(value)) {
+                setErrors({
+                    ...errors,
+                    email: 'Error: Email must be valid.'
+                })
+                return
+            }
         }
         
     };
@@ -68,9 +86,10 @@ const CreateUser = () => {
             <label htmlFor="name">Name:</label>
                 <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required></input>
             <label htmlFor="username">Username:</label>
-                {errors}
+                {errors.username}
                 <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required></input>
             <label htmlFor="email">Email:</label>
+                {errors.email}
                 <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required></input>
             <label htmlFor="coverImageUrl">Cover image URL:</label>
                 <input type="url" id="coverImageUrl" name="coverImageUrl" value={formData.coverImageUrl} onChange={handleChange} required></input>
