@@ -18,9 +18,9 @@ const CreateUser = () => {
         profileImageUrl: ''
     });
     const [errors, setErrors] = useState('')
-
+    const [message, setMessage] = useState('')
     const isUsernameValid = (username: string): boolean => {
-        const usernamePattern = /^[a-z]/;
+        const usernamePattern = /^[a-z0-9]/;
         return usernamePattern.test(username);
     }
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ const CreateUser = () => {
         setFormData({...formData, [name]: value});
         if (name === "username") {
                 if (!isUsernameValid(value)) {
-                setErrors('Error: Username cannot contain uppercase letters')
+                setErrors('Error: Username should only contain lowercase letters and numbers.')
                 return
             }
             setErrors('')
@@ -38,23 +38,31 @@ const CreateUser = () => {
 
     const checkSubmit = async (e: React.FormEvent)=> {
         e.preventDefault();
-
+        setMessage('');
         fetch('http://localhost:3001/users/create', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(formData),
         })
-        .then( response => response.text())
-        .then(data => {
-           console.log('User Created: ', data);
+        .then(response => {
+            if (response.ok) {
+                setMessage('User Successfully Created!');
+                setFormData({
+                    name: '',
+                    username: '',
+                    email: '',
+                    coverImageUrl: '',
+                    profileImageUrl: '',
+                })
+            }
         })
         .catch(error => {
             console.error('error:', error)
+            setMessage('User Not Created!')
         });
         
         }
         
-
     return (
         <form className="create-user-form-container" onSubmit={checkSubmit}>
             <label htmlFor="name">Name:</label>
@@ -69,7 +77,7 @@ const CreateUser = () => {
             <label htmlFor="profileImageUrl">Profile image URL:</label>
                 <input type="url" id="profileImageUrl" name="profileImageUrl" value={formData.profileImageUrl} onChange={handleChange} required></input>
             <button type="submit">Submit</button>
-
+            {message}
             
             
         </form>
