@@ -38,4 +38,5 @@ router.get('/:userId/', async (request, response) => {
     return response.status(200).json(user);
 });
 
+
 export default router;
