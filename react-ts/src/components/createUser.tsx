@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import './createUser.scss';
 
 export type CreateUserRequest = {
@@ -17,23 +17,74 @@ const CreateUser = () => {
         coverImageUrl: '',
         profileImageUrl: ''
     });
-    const [errors, setErrors] = useState('')
+    const [errors, setErrors] = useState({
+        username: '',
+        email: ''
+    })
     const [message, setMessage] = useState('')
-    const isUsernameValid = (username: string): boolean => {
-        const usernamePattern = /^[a-z0-9]/;
-        return usernamePattern.test(username);
+    const [showErrorText, setShowErrorText] = useState({
+        username: false,
+        email: false
+    });
+
+    const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.id === "username") {
+           if (e.target.validity.patternMismatch) {    
+            setErrors({
+                    ...errors,
+                    username: 'Error: Username should only contain lowercase letters and numbers.'
+                })
+                setShowErrorText({
+                    ...showErrorText,
+                    username: true
+                });
+            } 
+        }
+        if (e.target.id === "email") {
+            if (e.target.validity.patternMismatch) {
+                setErrors({
+                    ...errors,
+                    email: 'Error: Email must be valid.'
+                })
+                setShowErrorText({
+                    ...showErrorText,
+                    email: true
+                });
+            }
+        }
     }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
-        if (name === "username") {
-                if (!isUsernameValid(value)) {
-                setErrors('Error: Username should only contain lowercase letters and numbers.')
-                return
+        const newValueIsValid = !e.target.validity.patternMismatch;
+        if (errors) {
+            if (e.target.id === "username") {
+                if (newValueIsValid) {
+                    setErrors({
+                        ...errors,
+                        username: ''
+                    });
+                    setShowErrorText({
+                        ...showErrorText,
+                        username: false,
+                    });
+                }
             }
-            setErrors('')
+            if (e.target.id === "email") {
+                if (newValueIsValid) {
+                    setErrors({
+                        ...errors,
+                        email: ''
+                    });
+                    setShowErrorText({
+                        ...showErrorText,
+                        email: false,
+                    });
+                }
+            }
+
         }
-        
     };
 
     const checkSubmit = async (e: React.FormEvent)=> {
@@ -68,10 +119,11 @@ const CreateUser = () => {
             <label htmlFor="name">Name:</label>
                 <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required></input>
             <label htmlFor="username">Username:</label>
-                {errors}
-                <input type="text" id="username" name="username" value={formData.username} onChange={handleChange} required></input>
+                {showErrorText.username && errors.username}
+                <input type="text" id="username" name="username" value={formData.username} pattern="^[a-z0-9]" onChange={handleChange} onBlur={handleBlur} required></input>
             <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required></input>
+                {showErrorText.email && errors.email}
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} pattern="[\w.'_%+]*@[\w.]*" onBlur={handleBlur} required></input>
             <label htmlFor="coverImageUrl">Cover image URL:</label>
                 <input type="url" id="coverImageUrl" name="coverImageUrl" value={formData.coverImageUrl} onChange={handleChange} required></input>
             <label htmlFor="profileImageUrl">Profile image URL:</label>
