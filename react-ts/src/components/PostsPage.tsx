@@ -86,8 +86,8 @@ export function PostsPage() {
                         <div className = "post-container" key={post.id}>
                             <img src={post.imageUrl} />
                             <form>
-                                <button type="submit" onClick={handleLike} value={post.id}><i className="fa fa-thumbs-up"></i></button>
-                                <button type="submit" onClick={handleDislike} value={post.id}><i className="fa fa-thumbs-down"></i> </button>
+                                <button aria-label="Like" type="submit" onClick={handleLike} value={post.id}><i className="fa fa-thumbs-up"></i></button>
+                                <button aria-label="DisLike" type="submit" onClick={handleDislike} value={post.id}><i className="fa fa-thumbs-down"></i> </button>
                             </form>
                             <p>{likes[post.id]} likes and {dislikes[post.id]} dislikes</p>
                             <p className="user-name">{post.postedBy.username}</p>
